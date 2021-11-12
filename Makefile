@@ -68,6 +68,8 @@ help:
 
 
 #più utile nel make perché nel caso posso posso forzare l'action
+set_runner:
+
 
 clone:
 #update time and date file
