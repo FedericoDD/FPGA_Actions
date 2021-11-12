@@ -4,7 +4,7 @@ TOP := $(shell pwd)
 PYTHON=python3.6
 
 #project stuffs
-MAIN_PRJ ?= drambenchmark
+MAIN_PRJ ?= hello
 PRJ_DIR ?= $(TOP)/upload
 
 #board stuffs
@@ -12,7 +12,7 @@ BRD_IP?=192.168.2.99
 BRD_DIR?=/home/xilinx/file/
 BRD_USR?=xilinx
 
-.PHONY:files 
+.PHONY: files all
 
 help:
 	@echo "*****************************************************************"
@@ -66,21 +66,16 @@ help:
 ############## ACTIONS ###################
 ##########################################
 
-
-#più utile nel make perché nel caso posso posso forzare l'action
-
 clone:
-#update time and date file
-#	touch $(MAIN_PRJ).py
 #copy file on board
 	rsync -avz $(MAIN_PRJ).py $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
 #remove from local repository
 #	rm $(MAIN_PRJ).py
 
-run_on_board:
-#run .py file
+run_py:
 	ssh $(BRD_USR)@$(BRD_IP) -c $(PYTHON) $(BRD_DIR)/$(MAIN_PRJ).py
-#run .bit file
+
+run_bit:
 	ssh $(BRD_USR)@$(BRD_IP) -c $(BRD_DIR)/$(MAIN_PRJ).bit
 
 return:
@@ -104,7 +99,7 @@ bit:
 
 files: python bit
 
-all: python bit clone run_on_board return
+all: clone run_on_board return
 
 #####################################################################################################
 
