@@ -3,9 +3,6 @@ SHELL = /bin/bash
 TOP := $(shell pwd)
 PYTHON=python3.6
 
-#runner stuffs
-RUN_DIR ?= /home/federico/action-runner
-
 #project stuffs
 MAIN_PRJ ?= drambenchmark
 PRJ_DIR ?= $(TOP)/build
@@ -72,9 +69,6 @@ help:
 
 #più utile nel make perché nel caso posso posso forzare l'action
 
-set_runner:
-	$(RUN_DIR)/run.sh
-
 clone:
 #update time and date file
 #	touch $(MAIN_PRJ).py
@@ -102,6 +96,7 @@ return:
 
 python:
 #create file python
+	cd 
 	touch $(MAIN_PRJ).py
 
 bit:
