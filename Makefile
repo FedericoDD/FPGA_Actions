@@ -118,10 +118,10 @@ all: python bit clone run_on_board return
 ################ CLEAN ###################
 ##########################################
 cleanall:
-	rm -rf $(BUILD_DIR)/*
+#	rm -rf $(PRJ_DIR)/*
 
 cleanboard:
-	ssh $(BRD_USR)@$(BRD_IP) -c rm -rf $(BRD_DIR)/*
+#	ssh $(BRD_USR)@$(BRD_IP) -c rm -rf $(BRD_DIR)/*
 ##################
 #####TO DO########
 ##################
