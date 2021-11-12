@@ -5,7 +5,7 @@ PYTHON=python3.6
 
 #project stuffs
 MAIN_PRJ ?= drambenchmark
-PRJ_DIR ?= $(TOP)/build
+PRJ_DIR ?= $(TOP)/upload
 
 #board stuffs
 BRD_IP?=192.168.2.99
@@ -96,8 +96,7 @@ return:
 
 python:
 #create file python
-	cd 
-	touch $(MAIN_PRJ).py
+	touch $(PRJ_DIR)/$(MAIN_PRJ).py
 
 bit:
 #create file bit
