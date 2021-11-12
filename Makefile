@@ -15,10 +15,10 @@ BRD_IP?=192.168.2.99
 BRD_DIR?=/home/xilinx/file/
 BRD_USR?=xilinx
 
-.PHONY:help clone run_on_board return python bit files all cleanall cleanboard
+.PHONY:files 
 
 help:
-@echo "*****************************************************************"
+	@echo "*****************************************************************"
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
 	@echo "           FPGA actions template makefile helper           "
