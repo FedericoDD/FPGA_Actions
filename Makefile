@@ -100,7 +100,7 @@ python:
 
 bit:
 #create file bit
-	touch $(MAIN_PRJ).bit
+	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
 
 files: python bit
 
