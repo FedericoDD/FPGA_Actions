@@ -24,7 +24,7 @@ jobs:
         run: |
           make clone
   Run:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: Copy
     steps:
       - name: Notices
