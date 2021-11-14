@@ -66,11 +66,13 @@ help:
 ############## ACTIONS ###################
 ##########################################
 
-clone:
-#copy file on board
-	rsync -avz $(MAIN_PRJ).py $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
+clone_py:
+	rsync -avz $(PRJ_DIR)/$(MAIN_PRJ).py $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
+clone_bit:
+	rsync -avz $(PRJ_DIR)/$(MAIN_PRJ).bit $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
 #remove from local repository
-#	rm $(MAIN_PRJ).py
+#	rm $(PRJ_DIR)/*.py
+#   rm $(PRJ_DIR)/*.bit
 
 run_py:
 	ssh $(BRD_USR)@$(BRD_IP) -c $(PYTHON) $(BRD_DIR)/$(MAIN_PRJ).py
@@ -78,7 +80,7 @@ run_py:
 run_bit:
 	ssh $(BRD_USR)@$(BRD_IP) -c $(BRD_DIR)/$(MAIN_PRJ).bit
 
-return:
+#return:
 ##################
 #####TO DO########
 ##################
@@ -99,7 +101,7 @@ bit:
 
 files: python bit
 
-all: clone run_on_board return
+all: clone_py clone_bit run_py  
 
 #####################################################################################################
 
