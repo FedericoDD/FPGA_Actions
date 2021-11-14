@@ -25,8 +25,6 @@ help:
 	@echo ""
 	@echo " [HELP] 'make' shows this helper"
 	@echo ""
-	@echo " [HELP] 'make print_config'  print project current config generation"
-	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
 	@echo " [INFO] 'make all'  clone and run files"
@@ -36,7 +34,7 @@ help:
 	@echo ""
 	@echo " [INFO] 'make python' create python file"
 	@echo " [INFO] 'make bit' create bit file"
-	@echo " [INFO] 'make files' create both file"
+	@echo " [INFO] 'make files' create both files"
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
@@ -73,11 +71,9 @@ help:
 ############################################################################################################
 
 python:
-#create file python
 	touch $(PRJ_DIR)/$(MAIN_PRJ).py
 
 bit:
-#create file bit
 	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
 
 files: python bit
@@ -94,18 +90,20 @@ clone_bit:
 
 clone: clone_py clone_bit
 
+
+
 run_py:
-	ssh $(BRD_USR)@$(BRD_IP) -c $(PYTHON) $(BRD_DIR)/$(MAIN_PRJ).py
+	ssh $(BRD_USR)@$(BRD_IP) '$(PYTHON) $(BRD_DIR)/$(MAIN_PRJ).py'
 
 run_bit:
-	ssh $(BRD_USR)@$(BRD_IP) -c $(BRD_DIR)/$(MAIN_PRJ).bit
+	ssh $(BRD_USR)@$(BRD_IP) '$(BRD_DIR)/$(MAIN_PRJ).bit'
 
 #return:
 ##################
 #####TO DO########
 ##################
 
-all: clone_py clone_bit run_py  
+all: clone run_py  
 
 
 ############################################################################################################
@@ -116,9 +114,6 @@ cleanall:
 	rm $(PRJ_DIR)/*.bit
 
 cleanboard:
-#	ssh $(BRD_USR)@$(BRD_IP) -c rm -rf $(BRD_DIR)/*
 	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.py'
 	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.bit'
-##################
-#####TO DO########
-##################
+
