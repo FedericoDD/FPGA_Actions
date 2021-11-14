@@ -71,7 +71,9 @@ help:
 ############################################################################################################
 
 python:
+	rm $(PRJ_DIR)/$(MAIN_PRJ).py
 	touch $(PRJ_DIR)/$(MAIN_PRJ).py
+	echo "print('Hello world')" >> $(PRJ_DIR)/$(MAIN_PRJ).py
 
 bit:
 	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
@@ -97,7 +99,7 @@ run_py:
 
 run_bit:
 	ssh $(BRD_USR)@$(BRD_IP) '$(BRD_DIR)/$(MAIN_PRJ).bit'
-
+	
 #return:
 ##################
 #####TO DO########
