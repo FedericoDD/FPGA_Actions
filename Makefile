@@ -9,7 +9,7 @@ PRJ_DIR ?= $(TOP)/upload
 
 #board stuffs
 BRD_IP?=192.168.2.99
-BRD_DIR?=/home/xilinx/file/
+BRD_DIR?=/home/xilinx/file
 BRD_USR?=xilinx
 
 .PHONY: files all
@@ -44,9 +44,9 @@ help:
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
-	@echo "[INFO] 'make clone_py' clone python file in the FPGA folder"
-	@echo "[INFO] 'make clone_bit' clone python file in the FPGA folder"
-	@echo "[INFO] 'make clone' clone all files in the FPGA folder"
+	@echo "[INFO] 'make clone_py' clone python file in the 'file' folder"
+	@echo "[INFO] 'make clone_bit' clone python file in the 'file' folder"
+	@echo "[INFO] 'make clone' clone all files in the 'file' folder"
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
@@ -54,8 +54,8 @@ help:
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
-	@echo "[INFO] 'make clean' cleans everything in the build folder"
-	@echo "[INFO] 'make cleanboard' cleans everything in the build folder on board"
+	@echo "[INFO] 'make clean' cleans everything in the 'upload' folder"
+	@echo "[INFO] 'make cleanboard' cleans everything in the 'file' folder on board"
 	@echo ""
 	@echo ""
 	@echo "*****************************************************************"
@@ -67,6 +67,20 @@ help:
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
+
+############################################################################################################
+################################### CREATE FILES ###########################################################
+############################################################################################################
+
+python:
+#create file python
+	touch $(PRJ_DIR)/$(MAIN_PRJ).py
+
+bit:
+#create file bit
+	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
+
+files: python bit
 
 
 ############################################################################################################
@@ -91,21 +105,8 @@ run_bit:
 #####TO DO########
 ##################
 
-############################################################################################################
-################################### CREATE FILES ###########################################################
-############################################################################################################
-
-python:
-#create file python
-	touch $(PRJ_DIR)/$(MAIN_PRJ).py
-
-bit:
-#create file bit
-	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
-
-files: python bit
-
 all: clone_py clone_bit run_py  
+
 
 ############################################################################################################
 ############################################ CLEAN #########################################################
@@ -114,8 +115,10 @@ cleanall:
 	rm $(PRJ_DIR)/*.py
 	rm $(PRJ_DIR)/*.bit
 
-#cleanboard:
+cleanboard:
 #	ssh $(BRD_USR)@$(BRD_IP) -c rm -rf $(BRD_DIR)/*
+	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.py'
+	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.bit'
 ##################
 #####TO DO########
 ##################
