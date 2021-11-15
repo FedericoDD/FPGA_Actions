@@ -12,7 +12,7 @@ BRD_IP?=192.168.2.99
 BRD_DIR?=/home/xilinx/file
 BRD_USR?=xilinx
 
-.PHONY: files all
+.PHONY: all clean
 
 help:
 	@echo "*****************************************************************"
@@ -29,12 +29,10 @@ help:
 	@echo ""
 	@echo " [INFO] 'make all'  clone and run files"
 	@echo ""
-	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
-	@echo " [INFO] 'make python' create python file"
-	@echo " [INFO] 'make bit' create bit file"
-	@echo " [INFO] 'make files' create both files"
+	@echo " default configuration: micro-usb addr 'BRD_IP?=$(BRD_IP)'"
+	@echo " default target directory on the board 'BRD_DIR?=$(BRD_DIR)'"
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
@@ -42,9 +40,9 @@ help:
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
-	@echo "[INFO] 'make clone_py' clone python file in the 'file' folder"
-	@echo "[INFO] 'make clone_bit' clone python file in the 'file' folder"
-	@echo "[INFO] 'make clone' clone all files in the 'file' folder"
+	@echo "[INFO] 'make copy_py' clone python file in the 'file' folder"
+	@echo "[INFO] 'make copy_bit' clone python file in the 'file' folder"
+	@echo "[INFO] 'make copy' clone all files in the 'file' folder"
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
@@ -52,9 +50,7 @@ help:
 	@echo ""
 	@echo "*****************************************************************"
 	@echo ""
-	@echo "[INFO] 'make clean' cleans everything in the 'upload' folder"
-	@echo "[INFO] 'make cleanboard' cleans everything in the 'file' folder on board"
-	@echo ""
+	@echo "[INFO] 'make clean' cleans everything in the folder on board"
 	@echo ""
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
@@ -65,34 +61,23 @@ help:
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
 	@echo "*****************************************************************"
+	@make helparam
 
 ############################################################################################################
-################################### CREATE FILES ###########################################################
+############################################### COPY #######################################################
 ############################################################################################################
 
-python:
-	rm $(PRJ_DIR)/$(MAIN_PRJ).py
-	touch $(PRJ_DIR)/$(MAIN_PRJ).py
-	echo "print('Hello world')" >> $(PRJ_DIR)/$(MAIN_PRJ).py
-
-bit:
-	touch $(PRJ_DIR)/$(MAIN_PRJ).bit
-
-files: python bit
-
-
-############################################################################################################
-############################################## ACTIONS #####################################################
-############################################################################################################
-
-clone_py:
+copy_py:
 	rsync -avz $(PRJ_DIR)/$(MAIN_PRJ).py $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
-clone_bit:
+copy_bit:
 	rsync -avz $(PRJ_DIR)/$(MAIN_PRJ).bit $(BRD_USR)@$(BRD_IP):$(BRD_DIR)
 
-clone: clone_py clone_bit
+copy: copy_py copy_bit
 
 
+############################################################################################################
+################################################ RUN #######################################################
+############################################################################################################
 
 run_py:
 	ssh $(BRD_USR)@$(BRD_IP) '$(PYTHON) $(BRD_DIR)/$(MAIN_PRJ).py'
@@ -105,17 +90,31 @@ run_bit:
 #####TO DO########
 ##################
 
-all: clone run_py  
+all: copy run_py  
 
 
 ############################################################################################################
-############################################ CLEAN #########################################################
+############################################### CLEAN ######################################################
 ############################################################################################################
-cleanall:
-	rm $(PRJ_DIR)/*.py
-	rm $(PRJ_DIR)/*.bit
 
-cleanboard:
+clean:
 	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.py'
 	ssh $(BRD_USR)@$(BRD_IP) 'rm $(BRD_DIR)/*.bit'
 
+helparam:
+	@echo ""
+	@echo "*****************************************************************"
+	@echo "" 
+	@echo "                 Makefile parameters  helpers               "
+	@echo ""
+	@echo "*****************************************************************"
+	@echo ""
+	@echo " [INFO] using shell=$(SHELL), top directory=$(TOP)"
+	@echo " [INFO] py version=$(PYTHON)"
+	@echo ""
+	@echo "*****************************************************************"
+	@echo "" 
+	@echo "               END of Makefile parameters helper                     "
+	@echo ""
+	@echo "*****************************************************************"
+	@echo ""

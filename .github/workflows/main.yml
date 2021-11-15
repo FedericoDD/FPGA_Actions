@@ -17,12 +17,12 @@ jobs:
 
       - name: Notices
         run: |
-          echo ----------ACTIONS ARE ACTIVATED------------
+          echo ------------------ACTIONS ARE ACTIVATED--------------------------
           echo Copying files on FPGA
 
       - name: Copy
         run: |
-          make clone
+          make copy
   Run:
     runs-on: self-hosted
     needs: Copy
